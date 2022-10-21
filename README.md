@@ -2,8 +2,18 @@
 
 Install:
 ```text
-git clone https://github.com/EfimovSergeiV/fanuc-parser.git
+get PYTHON  https://www.python.org/
+get GIT     https://git-scm.com/
 
+git clone https://github.com/EfimovSergeiV/fanuc-parser.git
+cd fanuc-parser
+
+python socket_parser.py
+python socket_client.py
+
+Автозагрузка:
+(Путь до терминала, с параметрами: /k python <absolute\path\to\script>)
+cmd /k python <absolute_path_to_script>
 ```
 
 

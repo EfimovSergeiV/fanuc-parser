@@ -1,86 +1,56 @@
 import socketserver
 import re, requests, json
-from datetime import datetime
+from time import sleep
 
 
 URL = 'http://127.0.0.1/'   # FANUCHOST = http://192.168.0.1/
 PATH = 'MD/IOSTATE.DG'
-TEST = True                 # Or False for production
-TIMEOUT = 5
+TEST = False                # Or False for production
+TIMEOUT = 1
 
 class TCPHandler(socketserver.BaseRequestHandler):
 
     VALUES = {}
 
     def handle(self):
-        request_data = self.request.recv(1024).strip().decode("utf-8")
-        list_request = str(request_data).split(" ")
+        try:
+            while True:
+                print("GET DATA")
 
+                if TEST:
+                    self.VALUES = {'FLG964': 'OFF', 'FLG453': 'OFF', 'FLG965': 'OFF'}
 
-        if TEST:
-            response_dict = {}
-            for key in list_request:
-                response_dict[key] = "OFF"
+                else:
 
+                    response = requests.get(f'{ URL }{ PATH }')
+                    server_data = re.findall(r'\w{0,5}[A-Z]+\[[\s{0,4}\d{0,4}]+\]+\s{0,6}\w{0,10}', response.text)
+                    
+                    for string in server_data:
+                        name_value = str(string).split("]")
+                        name = name_value[0].split("[")
+                        reg, sec, str_val = name[0], name[1].strip(), name_value[1].strip()
 
-        else:
-            # print(len(self.VALUES))
+                        try:
+                            val = float(str_val)
+                        except ValueError:
+                            val = str_val
 
-            # print(self.LATEST_UPDATED)
+                        self.VALUES[f'{reg}{sec}'] = val
 
-            self.VALUES['latest_updated'] = datetime.now().strftime('%Y %m %d %H %M %S').split(" ")
-            print(self.VALUES['latest_updated'])
-            # if self.LATEST_UPDATED:
-            #     print(f'{self.LATEST_UPDATED}')
+                data_send = json.dumps(self.VALUES, ensure_ascii=False)
+                self.request.sendall(bytes(data_send, encoding="utf-8"))
+                sleep(TIMEOUT)
 
-            latest_update = self.VALUES['latest_updated']
-            print("THIS LATEST UPDATE", datetime(
-                int(latest_update[0]),
-                int(latest_update[1]),
-                int(latest_update[2]),
-                int(latest_update[3]),
-                int(latest_update[4]),
-                int(latest_update[5]),
-            ).strftime('%Y %m %d %H %M %S').split(" "))
-            # self.LATEST_UPDATED = datetime.now().strftime('%Y %m %d %H %M %S').split(" ")
-
-            # if len(LATEST_UPDATED):
-            #     LATEST_UPDATED = str(datetime.now().strftime('%Y %m %d %H %M %S')).split(" ")
-
-            # print(len(LATEST_UPDATED))
-            # LATEST_UPDATED = str(datetime.now().strftime('%Y %m %d %H %M %S')).split(" ")
-
-            # print(f"Now: { datetime.now().strftime('%Y %m %d %H %M %S') }")
-
-
-
-            if True:#len(self.VALUES) == 0:
-                # print("CREATE/UPDATE NEW DICT")
-                response = requests.get(f'{ URL }{ PATH }')
-                server_data = re.findall(r'\w{0,5}[A-Z]+\[[\s{0,4}\d{0,4}]+\]+\s{0,6}\w{0,10}', response.text)
-                
-                for string in server_data:
-                    name_value = str(string).split("]")
-                    name = name_value[0].split("[")
-                    reg, sec, str_val = name[0], name[1].strip(), name_value[1].strip()
-
-                    try:
-                        val = float(str_val)
-                    except ValueError:
-                        val = str_val
-
-                    self.VALUES[f'{reg}{sec}'] = val
-
-            response_dict = {}
-            for key in list_request:
-                response_dict[key] = self.VALUES[key]
-
-        data_send = json.dumps(response_dict, ensure_ascii=False)
-        self.request.sendall(bytes(data_send, encoding="utf-8"))
+        except ConnectionAbortedError:
+            print("Connection aborted")
 
 
 if __name__ == "__main__":
     HOST, PORT = "localhost", 9000
 
     with socketserver.TCPServer((HOST, PORT), TCPHandler) as server:
-        server.serve_forever()
+        try:
+            print("Server started")
+            server.serve_forever()
+        except KeyboardInterrupt:
+            print("Close server")

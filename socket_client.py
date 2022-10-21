@@ -4,7 +4,6 @@ from time import sleep
 
 HOST, PORT = "localhost", 9000
 
-
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     sock.connect((HOST, PORT))
 

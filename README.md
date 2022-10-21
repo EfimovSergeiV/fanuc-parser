@@ -1,5 +1,12 @@
 # Fanuc web interface data parser
 
+Install:
+```text
+git clone https://github.com/EfimovSergeiV/fanuc-parser.git
+
+```
+
+
 Client example:
 ```python
 import socket, json

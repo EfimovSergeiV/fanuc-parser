@@ -1,28 +1,23 @@
+import socketserver
 import re, requests, json
-import configparser, socketserver
 from datetime import datetime
 
 
-config = configparser.ConfigParser()
-config.read('CONFIG.cfg')
-URL = config.get('DEFAULT', 'URL' )
-PATH = config.get('DEFAULT', 'PATH' )
-TEST = config.get('DEFAULT', 'TEST' )
-TIMEOUT = config.get('DEFAULT', 'TIMEOUT' )
-
-
+URL = 'http://127.0.0.1/'   # FANUCHOST = http://192.168.0.1/
+PATH = 'MD/IOSTATE.DG'
+TEST = True                 # Or False for production
+TIMEOUT = 5
 
 class TCPHandler(socketserver.BaseRequestHandler):
 
     VALUES = {}
-    LATEST_UPDATED = ['0000', '00', '00', '00', '00', '00']
 
     def handle(self):
         request_data = self.request.recv(1024).strip().decode("utf-8")
         list_request = str(request_data).split(" ")
 
 
-        if TEST.lower() == 'true':
+        if TEST:
             response_dict = {}
             for key in list_request:
                 response_dict[key] = "OFF"
@@ -33,12 +28,20 @@ class TCPHandler(socketserver.BaseRequestHandler):
 
             # print(self.LATEST_UPDATED)
 
-
+            self.VALUES['latest_updated'] = datetime.now().strftime('%Y %m %d %H %M %S').split(" ")
+            print(self.VALUES['latest_updated'])
             # if self.LATEST_UPDATED:
             #     print(f'{self.LATEST_UPDATED}')
 
-
-            # print(datetime.now().strftime('%Y %m %d %H %M %S').split(" "))
+            latest_update = self.VALUES['latest_updated']
+            print("THIS LATEST UPDATE", datetime(
+                int(latest_update[0]),
+                int(latest_update[1]),
+                int(latest_update[2]),
+                int(latest_update[3]),
+                int(latest_update[4]),
+                int(latest_update[5]),
+            ).strftime('%Y %m %d %H %M %S').split(" "))
             # self.LATEST_UPDATED = datetime.now().strftime('%Y %m %d %H %M %S').split(" ")
 
             # if len(LATEST_UPDATED):

@@ -3,7 +3,7 @@ import re, requests, json
 from time import sleep
 
 
-URL = 'http://127.0.0.1/'   # FANUCHOST : http://192.168.0.1/
+URL = 'http://192.168.0.1/'   # FANUCHOST : http://192.168.0.1/
 PATH = 'MD/IOSTATE.DG'
 TEST = False                # Or False for production
 TIMEOUT = 1
@@ -22,8 +22,13 @@ class TCPHandler(socketserver.BaseRequestHandler):
 
                 else:
 
-                    response = requests.get(f'{ URL }{ PATH }')
-                    server_data = re.findall(r'\w{0,5}[A-Z]+\[[\s{0,4}\d{0,4}]+\]+\s{0,6}\w{0,10}', response.text)
+                    try:
+                        response = requests.get(f'{ URL }{ PATH }')
+                        text = response.text
+                    except requests.exceptions.ConnectionError:
+                        text = 'ERR[1000]  ConnectErr'
+
+                    server_data = re.findall(r'\w{0,5}[A-Z]+\[[\s{0,4}\d{0,4}]+\]+\s{0,6}\w{0,10}', text)
                     
                     for string in server_data:
                         name_value = str(string).split("]")

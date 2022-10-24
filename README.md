@@ -6,6 +6,8 @@ get PYTHON  https://www.python.org/
 get GIT     https://git-scm.com/
 
 git clone https://github.com/EfimovSergeiV/fanuc-parser.git
+pip install requests
+
 cd fanuc-parser
 
 python socket_parser.py

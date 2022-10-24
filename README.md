@@ -51,3 +51,25 @@ TIMEOUT = 1
 # LOCALHOST : http://127.0.0.1/
 # FANUCHOST : http://192.168.0.1/
 ```
+
+Talking client
+```
+Get ESpeak  https://espeak.sourceforge.net/
+
+pip install pyttsx3
+```
+
+Models
+```
+    time = models.DateField(verbose_name="Дата создания", default=timezone.now)
+    error_code = models.FloatField(verbose_name="Ошибки")
+    voltage = models.FloatField(verbose_name="Вольтаж")
+    current = models.FloatField(verbose_name="Ток")
+    wire_feed_speed = models.FloatField(verbose_name="Скорость подачи проволоки")
+    motor_current = models.FloatField(verbose_name="Ток двигателя")
+    program_number = models.FloatField(verbose_name="Номер программы")
+    job_number = models.FloatField(verbose_name="Номер работы")
+    wire_feed_speed = models.FloatField(verbose_name="Скорость подачи проволоки")
+    volt_correction = models.FloatField(verbose_name="Коррекция напряжения")
+    dynamics = models.FloatField(verbose_name="Динамика")
+```

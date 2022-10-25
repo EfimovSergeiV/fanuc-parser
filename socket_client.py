@@ -65,7 +65,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                 )
 
                 cursor.execute("INSERT INTO welding VALUES(?,?,?,?,?,?,?,?,?,?,?,?);", data)
-                conn.commit()
+                # conn.commit()
                 # sleep(3)
 
             except json.decoder.JSONDecodeError:

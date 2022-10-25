@@ -7,13 +7,16 @@ from datetime import datetime
 
 # engine = pyttsx3.init()
 # engine.setProperty('rate', 200)
+
+from read_data import read_bytes
+
 HOST, PORT = "localhost", 9000
 
 count = 0
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     sock.connect((HOST, PORT))
-    conn = sqlite3.connect('db.sqlite3')
+    conn = sqlite3.connect('examples/sqlite3.db')
     cursor = conn.cursor()
 
     try:
@@ -48,25 +51,33 @@ PNS\t\t\t\t\t{ response["GOUT8"]}
 
                 # print(f'\n\n{ response }\nLEN RESPONSE: {len( response )} \n{type( response )}')
 
-                data = (
-                    # count,
-                    str(response["GIN1"]),
-                    str(response["GIN2"]),
-                    str(response["GIN3"]),
-                    str(response["GIN4"]),
-                    str(response["GIN5"]),
-                    str(response["GOUT1"]),
-                    str(response["GOUT2"]),
-                    str(response["GOUT3"]),
-                    str(response["GOUT4"]),
-                    str(response["GOUT5"]),
-                    str(response["GOUT8"]),
-                    str(now_time),
-                )
+                
+                data_from_bytes = read_bytes(response)
+                print(data_from_bytes)
 
-                cursor.execute("INSERT INTO welding VALUES(?,?,?,?,?,?,?,?,?,?,?,?);", data)
-                # conn.commit()
+                data_to_db = [
+                    data_from_bytes["arc_detect"],
+                    data_from_bytes["wirestick"],
+                    response["GIN1"],
+                    response["GIN2"],
+                    response["GIN3"],
+                    response["GIN4"],
+                    response["GIN5"],
+                    response["GOUT1"],
+                    response["GOUT2"],
+                    response["GOUT3"],
+                    response["GOUT4"],
+                    response["GOUT5"],
+                    response["GOUT8"],
+                    str(now_time),
+                ]
+
+                print(data_to_db, response["GOUT1"])
+
+                cursor.execute("INSERT INTO welding VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);", data_to_db)
+                conn.commit()
                 # sleep(3)
+
 
             except json.decoder.JSONDecodeError:
                 pass

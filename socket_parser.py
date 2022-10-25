@@ -5,7 +5,7 @@ from time import sleep
 
 URL = 'http://127.0.0.1/'   # FANUCHOST : http://192.168.0.1/
 PATH = 'MD/IOSTATE.DG'
-TEST = True                # Or False for production
+TEST = False                # Or False for production
 TIMEOUT = 1
 
 class TCPHandler(socketserver.BaseRequestHandler):
@@ -18,7 +18,7 @@ class TCPHandler(socketserver.BaseRequestHandler):
                 print("GET DATA")
 
                 if TEST:                    
-                    with open('data.json', 'r') as file:
+                    with open('examples/data.json', 'r') as file:
                         data = json.load(file)
                         self.VALUES = data
 

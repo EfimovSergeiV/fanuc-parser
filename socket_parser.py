@@ -3,9 +3,9 @@ import re, requests, json
 from time import sleep
 
 
-URL = 'http://192.168.0.1/'   # FANUCHOST : http://192.168.0.1/
+URL = 'http://127.0.0.1/'   # FANUCHOST : http://192.168.0.1/
 PATH = 'MD/IOSTATE.DG'
-TEST = False                # Or False for production
+TEST = True                # Or False for production
 TIMEOUT = 1
 
 class TCPHandler(socketserver.BaseRequestHandler):
@@ -17,8 +17,10 @@ class TCPHandler(socketserver.BaseRequestHandler):
             while True:
                 print("GET DATA")
 
-                if TEST:
-                    self.VALUES = {'FLG964': 'OFF', 'FLG453': 'OFF', 'FLG965': 'OFF'}
+                if TEST:                    
+                    with open('data.json', 'r') as file:
+                        data = json.load(file)
+                        self.VALUES = data
 
                 else:
 

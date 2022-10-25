@@ -27,6 +27,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                 # VOICE
                 # engine.say(f"Получен {len( response )} параметр")
                 # engine.runAndWait()
+
                 os.system('cls||clear')
                 now_time = datetime.now().strftime('%H:%M:%S')
                 print(f"""

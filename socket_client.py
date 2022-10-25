@@ -31,19 +31,19 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                 os.system('cls||clear')
                 now_time = datetime.now().strftime('%H:%M:%S')
                 print(f"""
-{ count }\tСчётчик
-{ now_time }\tВремя
-{ response["GIN1"]}\tОшибки
-{ response["GIN2"]}\tВольтаж
-{ response["GIN3"]}\tТок
-{ response["GIN4"]}\tСкорость подачи проволоки
-{ response["GIN5"]}\tТок двигателя
-{ response["GOUT1"]}\tНомер программы
-{ response["GOUT2"]}\tНомер работы
-{ response["GOUT3"]}\tСкорость подачи проволоки
-{ response["GOUT4"]}\tКоррекция напряжения
-{ response["GOUT5"]}\tДинамика
-{ response["GOUT8"]}\tPNS
+Счётчик\t\t\t\t\t{ count }
+Время\t\t\t\t\t{ now_time }
+Ошибки\t\t\t\t\t{ response["GIN1"]}
+Вольтаж\t\t\t\t\t{ response["GIN2"]}
+Ток\t\t\t\t\t{ response["GIN3"]}
+Скорость подачи проволоки\t\t{ response["GIN4"]}
+Ток двигателя\t\t\t\t{ response["GIN5"]}
+Номер программы\t\t\t\t{ response["GOUT1"]}
+Номер работы\t\t\t\t{ response["GOUT2"]}
+Скорость подачи проволоки\t\t{ response["GOUT3"]}
+Коррекция напряжения\t\t\t{ response["GOUT4"]}
+Динамика\t\t\t\t{ response["GOUT5"]}
+PNS\t\t\t\t\t{ response["GOUT8"]}
                                     """)
 
                 # print(f'\n\n{ response }\nLEN RESPONSE: {len( response )} \n{type( response )}')

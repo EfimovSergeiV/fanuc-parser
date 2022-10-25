@@ -53,7 +53,6 @@ PNS\t\t\t\t\t{ response["GOUT8"]}
 
                 
                 data_from_bytes = read_bytes(response)
-                print(data_from_bytes)
 
                 data_to_db = [
                     data_from_bytes["arc_detect"],
@@ -71,8 +70,6 @@ PNS\t\t\t\t\t{ response["GOUT8"]}
                     response["GOUT8"],
                     str(now_time),
                 ]
-
-                print(data_to_db, response["GOUT1"])
 
                 cursor.execute("INSERT INTO welding VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);", data_to_db)
                 conn.commit()

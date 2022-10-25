@@ -37,12 +37,12 @@ class TCPHandler(socketserver.BaseRequestHandler):
                         name = name_value[0].split("[")
                         reg, sec, str_val = name[0], name[1].strip(), name_value[1].strip()
 
-                        try:
-                            val = float(str_val)
-                        except ValueError:
-                            val = str_val
+                        # try:
+                        #     val = float(str_val)
+                        # except ValueError:
+                        #     val = str_val
 
-                        self.VALUES[f'{reg}{sec}'] = val
+                        self.VALUES[f'{reg}{sec}'] = str_val
 
                 data_send = json.dumps(self.VALUES, ensure_ascii=False)
                 self.request.sendall(bytes(data_send, encoding="utf-8"))

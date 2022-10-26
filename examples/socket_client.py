@@ -36,7 +36,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 
                 os.system('cls||clear')
                 now_time = datetime.now().strftime('%H:%M:%S')
-                print(f"""
+                try:
+                    print(f"""
 Счётчик\t\t\t\t\t{ count }
 Время\t\t\t\t\t{ now_time }
 Ошибки\t\t\t\t\t{ response["GIN1"]}
@@ -51,6 +52,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 Динамика\t\t\t\t{ response["GOUT5"]}
 PNS\t\t\t\t\t{ response["GOUT8"]}
                                     """)
+                except KeyError:
+                    print("Данные не найдены")
 
                 # print(f'\n\n{ response }\nLEN RESPONSE: {len( response )} \n{type( response )}')
 
@@ -64,29 +67,30 @@ PNS\t\t\t\t\t{ response["GOUT8"]}
                 except:
                     pass
 
+                
+                try:
+                    data_to_db = [
+                        data_from_bytes["arc_detect"],
+                        data_from_bytes["wirestick"],
+                        response["GIN1"],
+                        response["GIN2"],
+                        response["GIN3"],
+                        response["GIN4"],
+                        response["GIN5"],
+                        response["GOUT1"],
+                        response["GOUT2"],
+                        response["GOUT3"],
+                        response["GOUT4"],
+                        response["GOUT5"],
+                        response["GOUT8"],
+                        str(now_time),
+                    ]
 
-                data_to_db = [
-                    data_from_bytes["arc_detect"],
-                    data_from_bytes["wirestick"],
-                    response["GIN1"],
-                    response["GIN2"],
-                    response["GIN3"],
-                    response["GIN4"],
-                    response["GIN5"],
-                    response["GOUT1"],
-                    response["GOUT2"],
-                    response["GOUT3"],
-                    response["GOUT4"],
-                    response["GOUT5"],
-                    response["GOUT8"],
-                    str(now_time),
-                ]
-
-                cursor.execute("INSERT INTO welding VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);", data_to_db)
-                conn.commit()
-                print(BASE_DIR)
-                # sleep(3)
-
+                    cursor.execute("INSERT INTO welding VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);", data_to_db)
+                    conn.commit()
+                    
+                except KeyError:
+                    print("Данные не найдены")
 
             except json.decoder.JSONDecodeError:
                 pass

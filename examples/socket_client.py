@@ -4,19 +4,22 @@ from time import sleep
 # import pyttsx3
 import sqlite3
 from datetime import datetime
+from pathlib import Path
 
 # engine = pyttsx3.init()
 # engine.setProperty('rate', 200)
 
 from read_data import read_bytes
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 HOST, PORT = "localhost", 9000
 
 count = 0
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     sock.connect((HOST, PORT))
-    conn = sqlite3.connect('examples/sqlite3.db')
+    conn = sqlite3.connect(f'{ BASE_DIR }/examples/sqlite3.db')
+    print(f'{ BASE_DIR }sqlite3.db')
     cursor = conn.cursor()
 
     try:
@@ -81,6 +84,7 @@ PNS\t\t\t\t\t{ response["GOUT8"]}
 
                 cursor.execute("INSERT INTO welding VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);", data_to_db)
                 conn.commit()
+                print(BASE_DIR)
                 # sleep(3)
 
 

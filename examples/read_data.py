@@ -78,7 +78,7 @@ def read_bytes(response):
     ))
 
     error_code = int(error_code_bytes, 0)
-    voltage = int(voltage_bytes, 0)
+    voltage = int(voltage_bytes, 0) / 320
     current = int(current_bytes, 0)
     wire_feed_speed = int(wire_feed_speed_bytes, 0)
     motor_current = int(motor_current_bytes, 0)

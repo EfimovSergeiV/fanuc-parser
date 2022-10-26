@@ -1,9 +1,10 @@
 import socketserver
 import re, requests, json
 from time import sleep
+from pathlib import Path
 
-
-URL = 'http://192.168.0.1/'   # FANUCHOST : http://192.168.0.1/ LOCAL http://127.0.0.1/
+BASE_DIR = Path(__file__).resolve().parent.parent
+URL = 'http://127.0.0.1/'   # FANUCHOST : http://192.168.0.1/ LOCAL http://127.0.0.1/
 PATH = 'MD/IOSTATE.DG'
 TEST = False                # Or False for production
 TIMEOUT = 1
@@ -18,7 +19,7 @@ class TCPHandler(socketserver.BaseRequestHandler):
                 print("GET DATA")
 
                 if TEST:                    
-                    with open('examples/data.json', 'r') as file:
+                    with open(f'{ BASE_DIR }/examples/data.json', 'r') as file:
                         data = json.load(file)
                         self.VALUES = data
 
@@ -36,11 +37,6 @@ class TCPHandler(socketserver.BaseRequestHandler):
                         name_value = str(string).split("]")
                         name = name_value[0].split("[")
                         reg, sec, str_val = name[0], name[1].strip(), name_value[1].strip()
-
-                        # try:
-                        #     val = float(str_val)
-                        # except ValueError:
-                        #     val = str_val
 
                         self.VALUES[f'{reg}{sec}'] = str_val
 

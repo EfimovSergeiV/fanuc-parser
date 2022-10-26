@@ -51,8 +51,16 @@ PNS\t\t\t\t\t{ response["GOUT8"]}
 
                 # print(f'\n\n{ response }\nLEN RESPONSE: {len( response )} \n{type( response )}')
 
-                
-                data_from_bytes = read_bytes(response)
+                data_from_bytes = {
+                    "arc_detect": "",
+                    "wirestick": "",
+                }
+
+                try:
+                    data_from_bytes = read_bytes(response)
+                except:
+                    pass
+
 
                 data_to_db = [
                     data_from_bytes["arc_detect"],

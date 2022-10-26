@@ -14,9 +14,6 @@ def read_bytes(response):
     for val in response:
         data[val] = '1' if response[val] == 'ON' else '0'
 
-    print(data)
-
-
     error_code_bytes = '0b' + ''.join((
         data['DIN96'], data['DIN95'], data['DIN94'], data['DIN93'],
         data['DIN92'], data['DIN91'], data['DIN90'], data['DIN89'],       

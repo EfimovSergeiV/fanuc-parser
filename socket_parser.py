@@ -3,7 +3,7 @@ import re, requests, json
 from time import sleep
 
 
-URL = 'http://127.0.0.1/'   # FANUCHOST : http://192.168.0.1/
+URL = 'http://192.168.0.1/'   # FANUCHOST : http://192.168.0.1/ LOCAL http://127.0.0.1/
 PATH = 'MD/IOSTATE.DG'
 TEST = False                # Or False for production
 TIMEOUT = 1

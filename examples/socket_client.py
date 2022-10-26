@@ -25,7 +25,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         while True:
             count += 1
             
-            received = str(sock.recv(24576), "utf-8")
+            received = str(sock.recv(8000000), "utf-8")
             try:
                 response = json.loads(received)
                 

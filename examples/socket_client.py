@@ -19,7 +19,6 @@ count = 0
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     sock.connect((HOST, PORT))
     conn = sqlite3.connect(f'{ BASE_DIR }/examples/sqlite3.db')
-    print(f'{ BASE_DIR }sqlite3.db')
     cursor = conn.cursor()
 
     try:
@@ -88,7 +87,7 @@ PNS\t\t\t\t\t{ response["GOUT8"]}
 
                     cursor.execute("INSERT INTO welding VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);", data_to_db)
                     conn.commit()
-                    
+
                 except KeyError:
                     print("Данные не найдены")
 

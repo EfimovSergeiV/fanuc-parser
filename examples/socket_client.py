@@ -1,13 +1,13 @@
-import socket, json, os
-from time import sleep
+"""
+Этот пример принимает данные с сокеет-сервера и записывает их в SQLite базу данных
 
-# import pyttsx3
-import sqlite3
+Всё это немного тормозит, так как база не успевает. Если подумать, то можно улучшить.
+"""
+
+
+import socket, json, os, sqlite3
 from datetime import datetime
 from pathlib import Path
-
-# engine = pyttsx3.init()
-# engine.setProperty('rate', 200)
 
 from read_data import read_bytes
 
@@ -28,33 +28,28 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             received = str(sock.recv(8000000), "utf-8")
             try:
                 response = json.loads(received)
-                
-                # VOICE
-                # engine.say(f"Получен {len( response )} параметр")
-                # engine.runAndWait()
 
                 os.system('cls||clear')
                 now_time = datetime.now().strftime('%H:%M:%S')
                 try:
-                    print(f"""
-Счётчик\t\t\t\t\t{ count }
-Время\t\t\t\t\t{ now_time }
-Ошибки\t\t\t\t\t{ response["GIN1"]}
-Вольтаж\t\t\t\t\t{ response["GIN2"]}
-Ток\t\t\t\t\t{ response["GIN3"]}
-Скорость подачи проволоки\t\t{ response["GIN4"]}
-Ток двигателя\t\t\t\t{ response["GIN5"]}
-Номер программы\t\t\t\t{ response["GOUT1"]}
-Номер работы\t\t\t\t{ response["GOUT2"]}
-Скорость подачи проволоки\t\t{ response["GOUT3"]}
-Коррекция напряжения\t\t\t{ response["GOUT4"]}
-Динамика\t\t\t\t{ response["GOUT5"]}
-PNS\t\t\t\t\t{ response["GOUT8"]}
-                                    """)
+                    print(
+                        f'Счётчик\t\t\t\t\t{ count }'
+                        f'Время\t\t\t\t\t{ now_time }'
+                        f'Ошибки\t\t\t\t\t{ response["GIN1"]}'
+                        f'Вольтаж\t\t\t\t\t{ response["GIN2"]}'
+                        f'Ток\t\t\t\t\t{ response["GIN3"]}'
+                        f'Скорость подачи проволоки\t\t{ response["GIN4"]}'
+                        f'Ток двигателя\t\t\t\t{ response["GIN5"]}'
+                        f'Номер программы\t\t\t\t{ response["GOUT1"]}'
+                        f'Номер работы\t\t\t\t{ response["GOUT2"]}'
+                        f'Скорость подачи проволоки\t\t{ response["GOUT3"]}'
+                        f'Коррекция напряжения\t\t\t{ response["GOUT4"]}'
+                        f'Динамика\t\t\t\t{ response["GOUT5"]}'
+                        f'PNS\t\t\t\t\t{ response["GOUT8"]}'
+                        )
+
                 except KeyError:
                     print("Данные не найдены")
-
-                # print(f'\n\n{ response }\nLEN RESPONSE: {len( response )} \n{type( response )}')
 
                 data_from_bytes = {
                     "arc_detect": "",

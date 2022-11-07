@@ -1,13 +1,21 @@
+"""
+Сервер с парсером по регулярному выражению. 
+
+Можно настроить URL, TEST и TIMEOUT
+"""
+
+
 import socketserver
 import re, requests, json
 from time import sleep
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-URL = 'http://127.0.0.1/'   # FANUCHOST : http://192.168.0.1/ LOCAL http://127.0.0.1/
 PATH = 'MD/IOSTATE.DG'
-TEST = False                # Or False for production
-TIMEOUT = 1
+
+URL = 'http://127.0.0.1/'   # fanuc : http://192.168.0.1/ or local : http://127.0.0.1/
+TEST = True                 # True or False
+TIMEOUT = 1                 # Таймауты запросов к fanuc
 
 class TCPHandler(socketserver.BaseRequestHandler):
 

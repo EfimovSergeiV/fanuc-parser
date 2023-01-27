@@ -15,7 +15,7 @@ PATH = 'MD/IOSTATE.DG'
 
 URL = 'http://192.168.0.1/'     # fanuc : http://192.168.0.1/ or local : http://127.0.0.1/
 TEST = False                    # True or False
-TIMEOUT = 0.1                   # Таймауты запросов к fanuc
+TIMEOUT = 0                   # Таймауты запросов к fanuc
 
 class TCPHandler(socketserver.BaseRequestHandler):
 

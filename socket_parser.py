@@ -13,9 +13,9 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 PATH = 'MD/IOSTATE.DG'
 
-URL = 'http://127.0.0.1/'   # fanuc : http://192.168.0.1/ or local : http://127.0.0.1/
-TEST = True                 # True or False
-TIMEOUT = 1                 # Таймауты запросов к fanuc
+URL = 'http://192.168.0.1/'     # fanuc : http://192.168.0.1/ or local : http://127.0.0.1/
+TEST = False                    # True or False
+TIMEOUT = 0.1                   # Таймауты запросов к fanuc
 
 class TCPHandler(socketserver.BaseRequestHandler):
 

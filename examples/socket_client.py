@@ -18,8 +18,8 @@ count = 0
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     sock.connect((HOST, PORT))
-    conn = sqlite3.connect(f'{ BASE_DIR }/examples/sqlite3.db')
-    cursor = conn.cursor()
+    # conn = sqlite3.connect(f'{ BASE_DIR }/examples/sqlite3.db')
+    # cursor = conn.cursor()
 
     try:
         while True:
@@ -80,8 +80,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                         str(now_time),
                     ]
 
-                    cursor.execute("INSERT INTO welding VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);", data_to_db)
-                    conn.commit()
+                    # cursor.execute("INSERT INTO welding VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);", data_to_db)
+                    # conn.commit()
 
                 except KeyError:
                     print("Данные не найдены")
@@ -93,5 +93,5 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     except KeyboardInterrupt:
         print("Exit")
     
-    conn.close()
+    # conn.close()
     sock.close()

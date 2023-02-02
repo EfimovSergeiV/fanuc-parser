@@ -70,6 +70,8 @@ Get ESpeak  https://espeak.sourceforge.net/
 
 pip install pyttsx3
 ```
+pip install pyinstaller
+python -m PyInstaller --onefile .\socket_parser.py
 
 Models
 ```

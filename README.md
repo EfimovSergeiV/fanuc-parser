@@ -42,26 +42,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 
 Read data from bytes
 ```python
-    error_code_bytes = ''.join((
-        data['DIN96'],
-        data['DIN95'],
-        data['DIN94'],
-        data['DIN93'],
-        data['DIN92'],
-        data['DIN91'],
-        data['DIN90'],
-        data['DIN89'],
-    ))
+voltage_bytes = '0b' + ''.join((
+    data['DIN144'], data['DIN143'], data['DIN142'], data['DIN141'],
+    data['DIN140'], data['DIN139'], data['DIN138'], data['DIN137'],
+    data['DIN136'], data['DIN135'], data['DIN134'], data['DIN133'],
+    data['DIN132'], data['DIN131'], data['DIN130'], data['DIN129'],
+))
 
-    programm_number_bytes = ''.join((
-        data['DOUT100'],
-        data['DOUT99'],
-        data['DOUT98'],
-        data['DOUT97']
-    ))
-
-    programm_number = int(f"0b{ programm_number_bytes }", 0) * 0.2
-    error_code = int(f"0b{ error_code_bytes }", 0) * 0.5 
+voltage = int(voltage_bytes, 0) / 320   # С делителем
 ```
 
 Config to socket_parser.py:
@@ -82,11 +70,6 @@ Get ESpeak  https://espeak.sourceforge.net/
 
 pip install pyttsx3
 ```
-
-### Build for Windows
-
-pip install pyinstaller
-python -m PyInstaller --onefile .\debug.py
 
 Models
 ```

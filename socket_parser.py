@@ -1,3 +1,10 @@
+"""
+Сервер с парсером по регулярному выражению. 
+
+Можно настроить URL, TEST и TIMEOUT
+"""
+
+
 import socketserver
 import re, requests, json
 from time import sleep

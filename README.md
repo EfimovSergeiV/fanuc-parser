@@ -83,6 +83,11 @@ Get ESpeak  https://espeak.sourceforge.net/
 pip install pyttsx3
 ```
 
+### Build for Windows
+
+pip install pyinstaller
+python -m PyInstaller --onefile .\debug.py
+
 Models
 ```
     time = models.DateField(verbose_name="Дата создания", default=timezone.now)

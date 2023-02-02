@@ -2,12 +2,13 @@ import socketserver
 import re, requests, json
 from time import sleep
 from pathlib import Path
+from datetime import datetime
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-URL = 'http://127.0.0.1/'   # FANUCHOST : http://192.168.0.1/ LOCAL http://127.0.0.1/
+URL = 'http://192.168.0.1/'   # FANUCHOST : http://192.168.0.1/ LOCAL http://127.0.0.1/
 PATH = 'MD/IOSTATE.DG'
 TEST = False                # Or False for production
-TIMEOUT = 1
+TIMEOUT = 0.5
 
 class TCPHandler(socketserver.BaseRequestHandler):
 
@@ -16,7 +17,7 @@ class TCPHandler(socketserver.BaseRequestHandler):
     def handle(self):
         try:
             while True:
-                print("GET DATA")
+                print(f"{datetime.now().strftime('%H:%M:%S:%f')}")
 
                 if TEST:                    
                     with open(f'{ BASE_DIR }/examples/data.json', 'r') as file:

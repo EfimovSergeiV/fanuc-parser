@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 URL = 'http://192.168.0.1/'   # FANUCHOST : http://192.168.0.1/ LOCAL http://127.0.0.1/
 PATH = 'MD/IOSTATE.DG'
 TEST = False                # Or False for production
-TIMEOUT = 0.5
+TIMEOUT = 1
 
 class TCPHandler(socketserver.BaseRequestHandler):
 

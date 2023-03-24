@@ -49,11 +49,10 @@ class TCPHandler(socketserver.BaseRequestHandler):
                         self.VALUES[f'{reg}{sec}'] = str_val
 
                 data_send = json.dumps(self.VALUES, ensure_ascii=False)
-                try:
-                    self.request.sendall(bytes(data_send, encoding="utf-8"))
-                    sleep(TIMEOUT)
-                except:
-                    pass
+
+                self.request.sendall(bytes(data_send, encoding="utf-8"))
+                sleep(TIMEOUT)
+
 
         except ConnectionAbortedError:
             print("")

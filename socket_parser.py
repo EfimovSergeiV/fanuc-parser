@@ -11,11 +11,12 @@ from time import sleep
 from pathlib import Path
 from datetime import datetime
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+TEST_DATA_FILE = Path(__file__, 'examples', 'data.json')
 URL = 'http://192.168.0.1/'     # FANUCHOST : http://192.168.0.1/ LOCAL http://127.0.0.1/
 PATH = 'MD/IOSTATE.DG'
-TEST = False                    # Or False for production
+TEST = False                    # True Or False for production
 TIMEOUT = 1
+
 
 class TCPHandler(socketserver.BaseRequestHandler):
 
@@ -26,7 +27,7 @@ class TCPHandler(socketserver.BaseRequestHandler):
             while True:
 
                 if TEST:                    
-                    with open(f'{ BASE_DIR }/examples/data.json', 'r') as file:
+                    with open(f'{ TEST_DATA_FILE }', 'r') as file:
                         data = json.load(file)
                         self.VALUES = data
 

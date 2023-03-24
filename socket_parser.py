@@ -14,7 +14,7 @@ from datetime import datetime
 TEST_DATA_FILE = Path(__file__, 'examples', 'data.json')
 URL = 'http://192.168.0.1/'     # FANUCHOST : http://192.168.0.1/ LOCAL http://127.0.0.1/
 PATH = 'MD/IOSTATE.DG'
-TEST = False                    # True Or False for production
+TEST = True                    # True Or False for production
 TIMEOUT = 1
 
 

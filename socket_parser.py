@@ -15,7 +15,7 @@ from datetime import datetime
 URL = 'http://192.168.0.1/'     # FANUCHOST : http://192.168.0.1/ LOCAL http://127.0.0.1/
 PATH = 'MD/IOSTATE.DG'
 TEST = True                    # True Or False for production
-TIMEOUT = 50
+TIMEOUT = 1
 
 
 

@@ -12,9 +12,9 @@ from pathlib import Path
 from datetime import datetime
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-URL = 'http://192.168.0.1/'   # FANUCHOST : http://192.168.0.1/ LOCAL http://127.0.0.1/
+URL = 'http://192.168.0.1/'     # FANUCHOST : http://192.168.0.1/ LOCAL http://127.0.0.1/
 PATH = 'MD/IOSTATE.DG'
-TEST = False                # Or False for production
+TEST = False                    # Or False for production
 TIMEOUT = 1
 
 class TCPHandler(socketserver.BaseRequestHandler):
@@ -24,7 +24,6 @@ class TCPHandler(socketserver.BaseRequestHandler):
     def handle(self):
         try:
             while True:
-                print(f"{datetime.now().strftime('%H:%M:%S:%f')}")
 
                 if TEST:                    
                     with open(f'{ BASE_DIR }/examples/data.json', 'r') as file:
@@ -53,7 +52,7 @@ class TCPHandler(socketserver.BaseRequestHandler):
                 sleep(TIMEOUT)
 
         except ConnectionAbortedError:
-            print("Connection aborted")
+            print("")
 
 
 if __name__ == "__main__":
@@ -61,7 +60,6 @@ if __name__ == "__main__":
 
     with socketserver.TCPServer((HOST, PORT), TCPHandler) as server:
         try:
-            print("Server started")
             server.serve_forever()
         except KeyboardInterrupt:
-            print("Close server")
+            print('')

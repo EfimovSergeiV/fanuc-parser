@@ -15,14 +15,15 @@ from datetime import datetime
 URL = 'http://192.168.0.1/'     # FANUCHOST : http://192.168.0.1/ LOCAL http://127.0.0.1/
 PATH = 'MD/IOSTATE.DG'
 TEST = True                    # True Or False for production
-TIMEOUT = 1
+TIMEOUT = 50
+
 
 
 class TCPHandler(socketserver.BaseRequestHandler):
-
     VALUES = {}
 
     def handle(self):
+        counter = 0
         try:
             while True:
 
@@ -50,8 +51,13 @@ class TCPHandler(socketserver.BaseRequestHandler):
 
                 data_send = json.dumps(self.VALUES, ensure_ascii=False)
 
-                self.request.sendall(bytes(data_send, encoding="utf-8"))
-                sleep(TIMEOUT)
+                try:
+                    self.request.sendall(bytes(data_send, encoding="utf-8"))
+                    sleep(TIMEOUT)
+                except:
+                    counter += 1
+                    print(f'Err {counter}')
+                    break
 
 
         except ConnectionAbortedError:

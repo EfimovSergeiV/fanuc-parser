@@ -1,14 +1,11 @@
 """
 Этот пример принимает данные с сокеет-сервера и записывает их в SQLite базу данных
-
 Всё это немного тормозит, так как база не успевает. Если подумать, то можно улучшить.
 """
-
 
 import socket, json, os, sqlite3
 from datetime import datetime
 from pathlib import Path
-
 from read_data import read_bytes
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,11 +27,13 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                 response = json.loads(received)
 
                 os.system('cls||clear')
+                print(response)
+
                 now_time = datetime.now().strftime('%H:%M:%S')
                 try:
                     print(
-                        f'Счётчик\t\t\t\t\t{ count }'
-                        f'Время\t\t\t\t\t{ now_time }'
+                        f'Счётчик { count }\t\t\t\t\t'
+                        f'Время { now_time }\t\t\t\t\t'
                         f'Ошибки\t\t\t\t\t{ response["GIN1"]}'
                         f'Вольтаж\t\t\t\t\t{ response["GIN2"]}'
                         f'Ток\t\t\t\t\t{ response["GIN3"]}'

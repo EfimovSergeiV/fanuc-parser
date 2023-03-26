@@ -1,20 +1,16 @@
 """
 Сервер с парсером по регулярному выражению. 
-
-Можно настроить URL, TEST и TIMEOUT
+адрес ответа localhost:9000
 """
-
 
 import socketserver
 import re, requests, json
 from time import sleep
-from pathlib import Path
-from datetime import datetime
 
 
 URL = 'http://192.168.0.1/'     # FANUCHOST : http://192.168.0.1/ LOCAL http://127.0.0.1/
 PATH = 'MD/IOSTATE.DG'
-TEST = True                    # True Or False for production
+TEST = False                     # True Or False for production
 TIMEOUT = 1
 
 
@@ -23,7 +19,7 @@ class TCPHandler(socketserver.BaseRequestHandler):
     VALUES = {}
 
     def handle(self):
-        counter = 0
+
         try:
             while True:
 
@@ -53,15 +49,13 @@ class TCPHandler(socketserver.BaseRequestHandler):
 
                 try:
                     self.request.sendall(bytes(data_send, encoding="utf-8"))
-                    sleep(TIMEOUT)
                 except:
-                    counter += 1
-                    print(f'Err {counter}')
                     break
 
+                sleep(TIMEOUT)
 
         except ConnectionAbortedError:
-            print("")
+            pass
 
 
 if __name__ == "__main__":
@@ -70,5 +64,6 @@ if __name__ == "__main__":
     with socketserver.TCPServer((HOST, PORT), TCPHandler) as server:
         try:
             server.serve_forever()
+
         except KeyboardInterrupt:
-            print('')
+            pass
